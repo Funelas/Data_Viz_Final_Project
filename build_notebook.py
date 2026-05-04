@@ -196,12 +196,20 @@ top_risk = df_brgy.sort_values(by='RiskScore', ascending=False).head(10)
 sns.barplot(data=top_risk, x='RiskScore', y='Barangay', palette='Reds_r')
 plt.title('Top 10 High-Risk Barangays (Mitigation Priority)')
 
-# 4. Facility Capacity by Barangay
+# 4. Gap Analysis: Population Affected vs Facility Capacity by Barangay
 plt.subplot(3, 2, 4)
-cap_per_brgy = df_fac.groupby('Barangay')['Capacity'].sum().sort_values(ascending=False).head(10)
-cap_per_brgy.plot(kind='bar', color='green')
-plt.title('Facility Capacity by Barangay (Gap Analysis)')
-plt.xticks(rotation=45)
+pop_affected = df_incidents.groupby('Barangay')['NumAffected'].sum()
+cap_per_brgy = df_fac.groupby('Barangay')['Capacity'].sum()
+gap_df = pd.DataFrame({'Population Affected': pop_affected, 'Facility Capacity': cap_per_brgy}).fillna(0)
+gap_df = gap_df.sort_values('Population Affected', ascending=False).head(10)
+x = range(len(gap_df))
+width = 0.4
+plt.bar([i - width/2 for i in x], gap_df['Population Affected'], width=width, color='#d93025', label='Population Affected')
+plt.bar([i + width/2 for i in x], gap_df['Facility Capacity'], width=width, color='#1e8e3e', label='Facility Capacity')
+plt.xticks(ticks=x, labels=gap_df.index, rotation=45, ha='right')
+plt.title('Gap Analysis: Affected vs Capacity (by Barangay)')
+plt.legend()
+plt.tight_layout()
 
 # 5. Incident Severity Breakdown
 plt.subplot(3, 2, 5)
@@ -213,7 +221,6 @@ plt.setp(autotexts, size=12, weight="bold", color="white")
 plt.setp(texts, size=12, weight="bold")
 plt.title('Incident Severity Breakdown (Threat Level)')
 plt.ylabel('')
-plt.legend(title="Severity Levels", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
 
 plt.tight_layout()
 plt.show()
