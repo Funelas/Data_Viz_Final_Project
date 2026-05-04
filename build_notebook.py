@@ -231,7 +231,21 @@ olap_code = """# Define Interactive Widgets
 sorted_brgys = sorted(list(df_incidents['Barangay'].unique()))
 severity_levels = ["Low", "Moderate", "High", "Critical"]
 
-month_filter = widgets.Dropdown(options=['All'] + list(df_incidents['Month'].unique()), description='Month:')
+# Derive sorted unique months (e.g. '01'..'12') and years from the data
+all_months_str = sorted(df_incidents['DateTime'].dt.month.unique())
+month_labels = [f"{m:02d}" for m in all_months_str]
+all_years = sorted(df_incidents['DateTime'].dt.year.unique())
+
+month_range_filter = widgets.SelectionRangeSlider(
+    options=month_labels, index=(0, len(month_labels)-1),
+    description='Month Range:', continuous_update=False,
+    layout=widgets.Layout(width='500px')
+)
+year_range_filter = widgets.SelectionRangeSlider(
+    options=all_years, index=(0, len(all_years)-1),
+    description='Year Range:', continuous_update=False,
+    layout=widgets.Layout(width='500px')
+)
 type_filter = widgets.Dropdown(options=['All'] + list(df_incidents['Type'].unique()), description='Incident Type:')
 severity_filter = widgets.Dropdown(options=['All'] + severity_levels, description='Severity:')
 brgy_filter = widgets.Dropdown(options=['All'] + sorted_brgys, description='Barangay:')
@@ -244,8 +258,14 @@ export_status = widgets.Output()
 
 def get_filtered_data():
     filtered_df = df_incidents.copy()
-    if month_filter.value != 'All':
-        filtered_df = filtered_df[filtered_df['Month'] == month_filter.value]
+    start_month, end_month = int(month_range_filter.value[0]), int(month_range_filter.value[1])
+    start_year, end_year = year_range_filter.value[0], year_range_filter.value[1]
+    filtered_df = filtered_df[
+        (filtered_df['DateTime'].dt.month >= start_month) &
+        (filtered_df['DateTime'].dt.month <= end_month) &
+        (filtered_df['DateTime'].dt.year >= start_year) &
+        (filtered_df['DateTime'].dt.year <= end_year)
+    ]
     if type_filter.value != 'All':
         filtered_df = filtered_df[filtered_df['Type'] == type_filter.value]
     if severity_filter.value != 'All':
@@ -356,7 +376,8 @@ def export_data(b):
         print(f"✅ Successfully exported {len(filtered_df)} records to {filename}")
 
 # Attach observers
-month_filter.observe(update_dashboard, names='value')
+month_range_filter.observe(update_dashboard, names='value')
+year_range_filter.observe(update_dashboard, names='value')
 type_filter.observe(update_dashboard, names='value')
 severity_filter.observe(update_dashboard, names='value')
 brgy_filter.observe(update_dashboard, names='value')
@@ -364,9 +385,10 @@ fac_type_filter.observe(update_dashboard, names='value')
 export_button.on_click(export_data)
 
 # Structured Filter Layout
-filter_style = {'description_width': '100px'}
+filter_style = {'description_width': '110px'}
 filter_layout = widgets.Layout(width='300px')
-month_filter.style, month_filter.layout = filter_style, filter_layout
+month_range_filter.style = filter_style
+year_range_filter.style = filter_style
 type_filter.style, type_filter.layout = filter_style, filter_layout
 severity_filter.style, severity_filter.layout = filter_style, filter_layout
 brgy_filter.style, brgy_filter.layout = filter_style, filter_layout
@@ -376,7 +398,9 @@ export_button.layout = widgets.Layout(width='300px', margin='10px 0 0 0')
 
 filter_box = widgets.VBox([
     widgets.HTML("<h3>Interactive OLAP Filters</h3>"),
-    widgets.HBox([month_filter, type_filter, severity_filter]),
+    month_range_filter,
+    year_range_filter,
+    widgets.HBox([type_filter, severity_filter]),
     widgets.HBox([brgy_filter, fac_type_filter]),
     export_button
 ], layout=widgets.Layout(padding='15px', border='2px solid #4CAF50', margin='0 0 20px 0', border_radius='10px', background_color='#f9f9f9'))
@@ -396,6 +420,15 @@ The DRRM BI Dashboard also serves as an operational interface. Staff can use the
 
 entry_code = """# Data Entry Forms
 import datetime
+
+display(HTML('''
+<style>
+.entry-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.entry-scroll::-webkit-scrollbar-track { background: transparent; border-radius: 10px; }
+.entry-scroll::-webkit-scrollbar-thumb { background: #a0aec0; border-radius: 10px; }
+.entry-scroll::-webkit-scrollbar-thumb:hover { background: #718096; }
+</style>
+'''))
 
 sorted_brgys = sorted(list(df_brgy['Barangay'].unique()))
 severity_levels = ["Low", "Moderate", "High", "Critical"]
@@ -466,14 +499,16 @@ fac_box = widgets.VBox([
     widgets.HBox([fac_name_in, fac_brgy_in, fac_type_in]),
     widgets.HBox([fac_cap_in, fac_lat_in, fac_lon_in]),
     btn_add_fac
-], layout=widgets.Layout(padding='15px', border='1px solid #ccc', margin='0 0 20px 0', border_radius='5px'))
+], layout=widgets.Layout(padding='15px', border='1px solid #ccc', margin='0 0 20px 0', border_radius='5px', overflow='auto'))
+fac_box.add_class('entry-scroll')
 
 inc_box = widgets.VBox([
     widgets.HTML("<h3>Log New Incident</h3>"),
     widgets.HBox([inc_date_in, inc_brgy_in, inc_type_in]),
     widgets.HBox([inc_sev_in, inc_aff_in, inc_lat_in, inc_lon_in]),
     btn_add_inc
-], layout=widgets.Layout(padding='15px', border='1px solid #ccc', margin='0 0 20px 0', border_radius='5px'))
+], layout=widgets.Layout(padding='15px', border='1px solid #ccc', margin='0 0 20px 0', border_radius='5px', overflow='auto'))
+inc_box.add_class('entry-scroll')
 
 display(fac_box)
 display(inc_box)
