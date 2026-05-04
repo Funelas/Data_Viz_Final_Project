@@ -1,0 +1,16 @@
+TeamID,Name,BaseBarangay,Specialty,OnDuty/Availability,Latitude,Longitude
+TEAM-001,Biñan Rescue Squad 1,Langkiwa,Medical,On Duty,14.32699,121.07091
+TEAM-002,Biñan Rescue Squad 2,Casile,Medical,Available,14.31715,121.06776
+TEAM-003,Biñan Rescue Squad 3,Canlalay,Water Rescue,On Duty,14.33975,121.06353
+TEAM-004,Biñan Rescue Squad 4,Santo Tomas,General Purpose,On Duty,14.33697,121.07628
+TEAM-005,Biñan Rescue Squad 5,San Jose,Medical,Deployed,14.33937,121.09578
+TEAM-006,Biñan Rescue Squad 6,Timbao,Fire Response,Available,14.3361,121.06439
+TEAM-007,Biñan Rescue Squad 7,San Vicente,General Purpose,On Duty,14.34662,121.10961
+TEAM-008,Biñan Rescue Squad 8,Canlalay,Fire Response,Deployed,14.33975,121.06353
+TEAM-009,Biñan Rescue Squad 9,Zapote,Fire Response,Available,14.31506,121.05601
+TEAM-010,Biñan Rescue Squad 10,Santo Tomas,Search & Rescue,Available,14.33697,121.07628
+TEAM-011,Biñan Rescue Squad 11,Santo Tomas,Medical,Deployed,14.33697,121.07628
+TEAM-012,Biñan Rescue Squad 12,Ganado,Fire Response,On Duty,14.31176,121.10143
+TEAM-013,Biñan Rescue Squad 13,Zapote,Search & Rescue,On Duty,14.31506,121.05601
+TEAM-014,Biñan Rescue Squad 14,Poblacion,General Purpose,On Duty,14.35109,121.06431
+TEAM-015,Biñan Rescue Squad 15,Soro-Soro,General Purpose,Available,14.32676,121.06423
