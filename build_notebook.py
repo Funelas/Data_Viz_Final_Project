@@ -239,21 +239,23 @@ olap_code = """# Define Interactive Widgets
 sorted_brgys = sorted(list(df_incidents['Barangay'].unique()))
 severity_levels = ["Low", "Moderate", "High", "Critical"]
 
-# Derive sorted unique months (e.g. '01'..'12') and years from the data
-all_months_str = sorted(df_incidents['DateTime'].dt.month.unique())
-month_labels = [f"{m:02d}" for m in all_months_str]
-all_years = sorted(df_incidents['DateTime'].dt.year.unique())
+# Derive sorted unique YYYY-MM periods as start/end date range
+all_periods = sorted(df_incidents['Month'].unique())
 
-month_range_filter = widgets.SelectionRangeSlider(
-    options=month_labels, index=(0, len(month_labels)-1),
-    description='Month Range:', continuous_update=False,
-    layout=widgets.Layout(width='500px')
+date_range_filter = widgets.SelectionRangeSlider(
+    options=all_periods, index=(0, len(all_periods)-1),
+    description='Date Range:', continuous_update=True, readout=False,
+    layout=widgets.Layout(width='600px')
 )
-year_range_filter = widgets.SelectionRangeSlider(
-    options=all_years, index=(0, len(all_years)-1),
-    description='Year Range:', continuous_update=False,
-    layout=widgets.Layout(width='500px')
+date_range_label = widgets.HTML(
+    value=f'<div style="text-align:center; width:600px;"><b>Start:</b> {all_periods[0]} &nbsp;&nbsp;&nbsp; <b>End:</b> {all_periods[-1]}</div>',
+    layout=widgets.Layout(width='600px', margin='4px 0 10px 0')
 )
+
+def update_date_label(change):
+    date_range_label.value = f'<div style="text-align:center; width:600px;"><b>Start:</b> {date_range_filter.value[0]} &nbsp;&nbsp;&nbsp; <b>End:</b> {date_range_filter.value[1]}</div>'
+
+date_range_filter.observe(update_date_label, names='value')
 type_filter = widgets.Dropdown(options=['All'] + list(df_incidents['Type'].unique()), description='Incident Type:')
 severity_filter = widgets.Dropdown(options=['All'] + severity_levels, description='Severity:')
 brgy_filter = widgets.Dropdown(options=['All'] + sorted_brgys, description='Barangay:')
@@ -266,13 +268,10 @@ export_status = widgets.Output()
 
 def get_filtered_data():
     filtered_df = df_incidents.copy()
-    start_month, end_month = int(month_range_filter.value[0]), int(month_range_filter.value[1])
-    start_year, end_year = year_range_filter.value[0], year_range_filter.value[1]
+    start_period, end_period = date_range_filter.value[0], date_range_filter.value[1]
     filtered_df = filtered_df[
-        (filtered_df['DateTime'].dt.month >= start_month) &
-        (filtered_df['DateTime'].dt.month <= end_month) &
-        (filtered_df['DateTime'].dt.year >= start_year) &
-        (filtered_df['DateTime'].dt.year <= end_year)
+        (filtered_df['Month'] >= start_period) &
+        (filtered_df['Month'] <= end_period)
     ]
     if type_filter.value != 'All':
         filtered_df = filtered_df[filtered_df['Type'] == type_filter.value]
@@ -384,8 +383,7 @@ def export_data(b):
         print(f"✅ Successfully exported {len(filtered_df)} records to {filename}")
 
 # Attach observers
-month_range_filter.observe(update_dashboard, names='value')
-year_range_filter.observe(update_dashboard, names='value')
+date_range_filter.observe(update_dashboard, names='value')
 type_filter.observe(update_dashboard, names='value')
 severity_filter.observe(update_dashboard, names='value')
 brgy_filter.observe(update_dashboard, names='value')
@@ -395,8 +393,7 @@ export_button.on_click(export_data)
 # Structured Filter Layout
 filter_style = {'description_width': '110px'}
 filter_layout = widgets.Layout(width='300px')
-month_range_filter.style = filter_style
-year_range_filter.style = filter_style
+date_range_filter.style = filter_style
 type_filter.style, type_filter.layout = filter_style, filter_layout
 severity_filter.style, severity_filter.layout = filter_style, filter_layout
 brgy_filter.style, brgy_filter.layout = filter_style, filter_layout
@@ -406,8 +403,8 @@ export_button.layout = widgets.Layout(width='300px', margin='10px 0 0 0')
 
 filter_box = widgets.VBox([
     widgets.HTML("<h3>Interactive OLAP Filters</h3>"),
-    month_range_filter,
-    year_range_filter,
+    date_range_filter,
+    date_range_label,
     widgets.HBox([type_filter, severity_filter]),
     widgets.HBox([brgy_filter, fac_type_filter]),
     export_button

@@ -55,7 +55,7 @@ def create_report():
     
     data1 = [
         ('barangays.csv', 'Barangay data and hazard levels', 'Barangay, Population, HazardLevel', 'Risk scoring and hazard mapping'),
-        ('facilities.csv', 'List of city facilities', 'Type, Capacity, Occupants', 'Capacity analysis and shelters'),
+        ('facilities1.csv', 'List of city facilities', 'Type, Capacity, Occupants, ResourcesAvailable', 'Capacity analysis, occupancy load, and resupply status'),
         ('rescue_teams.csv', 'Rescue team details', 'Specialty, Status', 'Readiness and deployment check'),
         ('incidents.csv', 'Historical incident logs', 'DateTime, Type, Severity', 'Trend analysis and impact logs')
     ]
@@ -81,12 +81,14 @@ def create_report():
     hdr_cells2[4].text = 'Used In'
     
     data2 = [
-        ('Month', 'Text', 'Dimension', 'Month of the event', 'Trend chart filter'),
+        ('Month', 'Text', 'Dimension', 'YYYY-MM period of the event', 'Date range slider, trend chart'),
         ('Barangay', 'Text', 'Dimension', 'Location in Biñan', 'Mapping and ranking'),
-        ('Severity', 'Text', 'Dimension', 'Danger level', 'Severity pie chart'),
-        ('NumAffected', 'Integer', 'Measure', 'Number of people', 'Affected population KPI'),
-        ('Capacity', 'Integer', 'Measure', 'Max shelter space', 'Gap analysis chart'),
-        ('RiskScore', 'Float', 'Measure', 'Computed risk level', 'Prioritizing barangays')
+        ('Severity', 'Text', 'Dimension', 'Danger level', 'Severity pie chart, map colors'),
+        ('NumAffected', 'Integer', 'Measure (Additive)', 'Number of people affected', 'Affected population KPI, gap analysis'),
+        ('Capacity', 'Integer', 'Measure (Additive)', 'Max shelter space', 'Gap analysis chart, total capacity KPI'),
+        ('Occupants', 'Integer', 'Measure (Additive)', 'Current people inside facility', 'Occupancy KPI'),
+        ('ResourcesAvailable', 'Integer (0-100%)', 'Measure (Non-additive)', 'Supply level percentage', 'Resupply KPI, facility resource levels chart'),
+        ('RiskScore', 'Float', 'Measure (Non-additive)', 'Computed risk level', 'Prioritizing barangays')
     ]
     for row in data2:
         row_cells = table2.add_row().cells
@@ -131,16 +133,16 @@ def create_report():
     hdr_cells3[3].text = 'Supports What Decision?'
     
     data3 = [
-        ('Total Incidents', 'Incidents count', 'Real-time', 'Monitors current workload'),
+        ('Total Incidents', 'Count of incidents1.csv', 'Real-time', 'Monitors overall operational load'),
         ('Total Affected', 'Sum(NumAffected)', 'Real-time', 'Checks the scale of impact'),
-        ('Available Teams', 'Status column', 'Real-time', 'Identifies who can be deployed'),
+        ('Available Teams', 'OnDuty/Availability == True', 'Real-time', 'Identifies who can be deployed'),
         ('Total Capacity', 'Sum(Capacity)', 'Periodic', 'Checks total evacuation space'),
-        ('Highest Risk Brgy', 'RiskScore', 'Periodic', 'Helps in long-term planning'),
-        ('Evacuation Sites', 'Count(Facilities)', 'Periodic', 'Shows how many shelters are open'),
-        ('Water Rescue Teams', 'Specialty', 'Real-time', 'Important for flood response'),
-        ('Critical Incidents', 'Severity', 'Real-time', 'Highlights urgent emergencies'),
-        ('Occupancy Rate', 'Occupants/Capacity', 'Real-time', 'Prevents overcrowding in sites'),
-        ('Need Resupply', 'ResourcesAvailable', 'Real-time', 'Shows sites low on food/water')
+        ('Highest Risk Brgy', 'Derived RiskScore', 'Periodic', 'Prioritizes mitigation focus'),
+        ('Evac Centers', 'Type == Evacuation Site', 'Periodic', 'Monitors shelter availability'),
+        ('Water Rescue Teams', 'Specialty == WaterRescue', 'Real-time', 'Evaluates flood response capability'),
+        ('Critical Incidents', 'Severity == Critical', 'Real-time', 'Flags high-priority emergencies'),
+        ('Occupants / Capacity', 'Occupants, Capacity', 'Real-time', 'Shows fill rate — flags facilities close to full'),
+        ('Need Resupply', 'ResourcesAvailable < 30%', 'Real-time', 'Count of facilities needing restocking')
     ]
     for row in data3:
         row_cells = table3.add_row().cells
@@ -153,13 +155,13 @@ def create_report():
     # Rubric Section 7
     doc.add_heading('7. Dashboard Design and Explanation of Visuals', level=1)
     doc.add_paragraph("We designed our charts to answer specific questions for the city responders:")
-    
-    doc.add_paragraph("1. Incident Trend Over Time: This line chart answers 'Are incidents increasing?'. It uses the Month and Incident count. It helps the city prepare for seasonal floods.")
-    doc.add_paragraph("2. Incident Composition: A horizontal bar chart that answers 'Which hazard happens most often?'. It shows that floods are the biggest threat.")
-    doc.add_paragraph("3. Risk Ranking: This bar chart uses the Risk Score to rank barangays. It tells the city where to focus their flood mitigation budget.")
-    doc.add_paragraph("4. Gap Analysis: This chart compares affected people vs. available capacity. It helps the city decide if they need to open more evacuation sites.")
-    doc.add_paragraph("5. Severity Pie Chart: This shows the ratio of Critical vs. Low incidents. It gives an immediate idea of the overall threat level.")
-    doc.add_paragraph("6. Interactive Map: We used Folium to plot every incident and facility. We used custom icons for hospitals and schools so the user can easily find help.")
+    doc.add_paragraph("1. Incident Trend Over Time (Line Chart): Answers 'Are incidents increasing?'. Uses Month and Incident count to help the city prepare for seasonal spikes like monsoon floods.")
+    doc.add_paragraph("2. Incident Composition by Type (Horizontal Bar): Answers 'Which hazard happens most often?'. Shows that floods are the biggest threat and guides rescue team training priorities.")
+    doc.add_paragraph("3. Top 10 High-Risk Barangays (Bar Chart): Uses RiskScore to rank barangays. Tells the city where to focus their mitigation budget and pre-position resources.")
+    doc.add_paragraph("4. Gap Analysis: Affected vs Capacity (Grouped Bar Chart): Shows Population Affected and Facility Capacity side by side per barangay. Reveals where evacuation infrastructure is insufficient.")
+    doc.add_paragraph("5. Facility Resource Levels (Horizontal Bar Chart): Shows the 10 facilities with the lowest ResourcesAvailable, sorted ascending. A red dashed line marks the 30% resupply threshold. Color-coded: red (below 30%), yellow (30-60%), green (above 60%).")
+    doc.add_paragraph("6. Incident Severity Breakdown (Pie Chart): Shows the proportion of Critical, High, Moderate, and Low incidents. Gives an immediate idea of the overall threat level.")
+    doc.add_paragraph("7. Interactive Folium Map: Plots every incident and facility with color-coded severity markers scaled by size, and custom icons for Hospitals, Schools, Evacuation Sites, and Command Centers.")
     
     # (Note: Data Entry is included as part of the overall design/functionality)
     doc.add_paragraph(
@@ -172,13 +174,13 @@ def create_report():
     # Rubric Section 8
     doc.add_heading('8. Interaction and Analytical Navigation', level=1)
     doc.add_paragraph(
-        "Our dashboard supports multidimensional analysis through interactive filters. "
+        "Our dashboard supports multidimensional analysis through interactive filters built with ipywidgets. "
         "The users can perform the following OLAP operations:"
     )
-    doc.add_paragraph("Slice: Filtering the dashboard to show only the 'Flood' incidents.")
-    doc.add_paragraph("Dice: Filtering to show 'Critical' Floods during a specific 'Month'.")
-    doc.add_paragraph("Drill-down: Moving from the total KPI counts down to the exact street address on the interactive map or the details table.")
-    doc.add_paragraph("Roll-up: Aggregating individual incident reports into a monthly trend view to see the big picture.")
+    doc.add_paragraph("Slice: Filtering the dashboard to show only 'Flood' incidents using the Incident Type dropdown.")
+    doc.add_paragraph("Dice: Filtering to show 'Critical' Floods within a specific date range using the Date Range slider (SelectionRangeSlider over YYYY-MM periods) combined with the Severity dropdown.")
+    doc.add_paragraph("Drill-down: Moving from the total KPI counts down to the exact coordinates on the interactive Folium map or the color-coded details table.")
+    doc.add_paragraph("Roll-up: Aggregating individual incident records into a monthly trend view via the line chart in Section 4.")
     
     # --- 9. DRRM insights and recommendations ---
     # Rubric Section 9
