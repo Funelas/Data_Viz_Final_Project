@@ -1,41 +1,41 @@
-FacilityID,Name,Barangay,Type,Capacity,Latitude,Longitude
-FAC-001,Poblacion Barangay Hall,Poblacion,Barangay Hall,33,14.35103,121.06454
-FAC-002,San Antonio Evacuation Center,San Antonio,Evacuation Center,941,14.30874,121.0521
-FAC-003,San Antonio Barangay Hall,San Antonio,Barangay Hall,71,14.31329,121.05875
-FAC-004,San Antonio Evacuation Center,San Antonio,Evacuation Center,280,14.31176,121.05935
-FAC-005,San Jose Evacuation Center,San Jose,Evacuation Center,748,14.34132,121.09958
-FAC-006,San Vicente Health Center,San Vicente,Health Center,76,14.34267,121.10918
-FAC-007,San Vicente Evacuation Center,San Vicente,Evacuation Center,389,14.35055,121.11
-FAC-008,Santo Niño Evacuation Center,Santo Niño,Evacuation Center,522,14.31973,121.08089
-FAC-009,Santo Niño Evacuation Center,Santo Niño,Evacuation Center,682,14.32473,121.0884
-FAC-010,Platero Evacuation Center,Platero,Evacuation Center,460,14.32646,121.05332
-FAC-011,Platero Evacuation Center,Platero,Evacuation Center,733,14.32473,121.05278
-FAC-012,Platero Evacuation Center,Platero,Evacuation Center,521,14.32932,121.05474
-FAC-013,Tubigan Evacuation Center,Tubigan,Evacuation Center,317,14.33792,121.07622
-FAC-014,Canlalay Evacuation Center,Canlalay,Evacuation Center,130,14.33742,121.0683
-FAC-015,De La Paz Evacuation Center,De La Paz,Evacuation Center,785,14.34118,121.07382
-FAC-016,De La Paz Evacuation Center,De La Paz,Evacuation Center,733,14.33658,121.07695
-FAC-017,Casile Barangay Hall,Casile,Barangay Hall,94,14.31585,121.06518
-FAC-018,Casile Health Center,Casile,Health Center,88,14.31847,121.0691
-FAC-019,Casile Barangay Hall,Casile,Barangay Hall,35,14.3205,121.06597
-FAC-020,Malaban Barangay Hall,Malaban,Barangay Hall,22,14.34081,121.10507
-FAC-021,Malaban Evacuation Center,Malaban,Evacuation Center,560,14.33716,121.10474
-FAC-022,Soro-Soro Barangay Hall,Soro-Soro,Barangay Hall,58,14.33113,121.06061
-FAC-023,Timbao Evacuation Center,Timbao,Evacuation Center,200,14.33651,121.06635
-FAC-024,Loma Barangay Hall,Loma,Barangay Hall,79,14.32462,121.11386
-FAC-025,Loma Health Center,Loma,Health Center,88,14.33101,121.11023
-FAC-026,Loma Evacuation Center,Loma,Evacuation Center,148,14.32901,121.11237
-FAC-027,Zapote Health Center,Zapote,Health Center,43,14.31857,121.06037
-FAC-028,Zapote Health Center,Zapote,Health Center,44,14.31011,121.05262
-FAC-029,Mamplasan Hospital,Mamplasan,Hospital,212,14.3372,121.08575
-FAC-030,Mamplasan Health Center,Mamplasan,Health Center,52,14.33562,121.0853
-FAC-031,Ganado Health Center,Ganado,Health Center,52,14.31219,121.10152
-FAC-032,Ganado Barangay Hall,Ganado,Barangay Hall,41,14.3092,121.10616
-FAC-033,Ganado Evacuation Center,Ganado,Evacuation Center,487,14.31582,121.10077
-FAC-034,Langkiwa Barangay Hall,Langkiwa,Barangay Hall,47,14.32868,121.07455
-FAC-035,Bungahan Hospital,Bungahan,Hospital,565,14.34228,121.10103
-FAC-036,San Francisco (Halang) Health Center,San Francisco (Halang),Health Center,49,14.36274,121.10845
-FAC-037,Calabuso Health Center,Calabuso,Health Center,56,14.32624,121.07209
-FAC-038,Calabuso Health Center,Calabuso,Health Center,79,14.32549,121.07075
-FAC-039,Calabuso Evacuation Center,Calabuso,Evacuation Center,210,14.32013,121.0695
-FAC-040,Santo Tomas Evacuation Center,Santo Tomas,Evacuation Center,615,14.33893,121.07698
+FacilityID,Name,Barangay,Type,Capacity,Latitude,Longitude,Occupants,ResourcesAvailable
+FAC-001,Poblacion Barangay Hall,Poblacion,Barangay Hall,33,14.35103,121.06454,13,80
+FAC-002,San Antonio Evacuation Center A,San Antonio,Evacuation Center,941,14.30874,121.0521,854,53
+FAC-003,San Antonio Barangay Hall,San Antonio,Barangay Hall,71,14.31329,121.05875,51,17
+FAC-004,San Antonio Evacuation Center B,San Antonio,Evacuation Center,280,14.31176,121.05935,170,56
+FAC-005,San Jose Evacuation Center,San Jose,Evacuation Center,748,14.34132,121.09958,173,44
+FAC-006,San Vicente Health Center,San Vicente,Health Center,76,14.34267,121.10918,17,87
+FAC-007,San Vicente Evacuation Center,San Vicente,Evacuation Center,389,14.35055,121.11,58,90
+FAC-008,Santo Niño Evacuation Center A,Santo Niño,Evacuation Center,522,14.31973,121.08089,436,45
+FAC-009,Santo Niño Evacuation Center B,Santo Niño,Evacuation Center,682,14.32473,121.0884,416,59
+FAC-010,Platero Evacuation Center A,Platero,Evacuation Center,460,14.32646,121.05332,322,13
+FAC-011,Platero Evacuation Center B,Platero,Evacuation Center,733,14.32473,121.05278,86,11
+FAC-012,Platero Evacuation Center C,Platero,Evacuation Center,521,14.32932,121.05474,481,15
+FAC-013,Tubigan Evacuation Center,Tubigan,Evacuation Center,317,14.33792,121.07622,256,63
+FAC-014,Canlalay Evacuation Center,Canlalay,Evacuation Center,130,14.33742,121.0683,36,13
+FAC-015,De La Paz Evacuation Center A,De La Paz,Evacuation Center,785,14.34118,121.07382,199,63
+FAC-016,De La Paz Evacuation Center B,De La Paz,Evacuation Center,733,14.33658,121.07695,187,72
+FAC-017,Casile Barangay Hall A,Casile,Barangay Hall,94,14.31585,121.06518,33,27
+FAC-018,Casile Health Center,Casile,Health Center,88,14.31847,121.0691,48,99
+FAC-019,Casile Barangay Hall B,Casile,Barangay Hall,35,14.3205,121.06597,16,53
+FAC-020,Malaban Barangay Hall,Malaban,Barangay Hall,22,14.34081,121.10507,7,43
+FAC-021,Malaban Evacuation Center,Malaban,Evacuation Center,560,14.33716,121.10474,347,83
+FAC-022,Soro-Soro Barangay Hall,Soro-Soro,Barangay Hall,58,14.33113,121.06061,12,71
+FAC-023,Timbao Evacuation Center,Timbao,Evacuation Center,200,14.33651,121.06635,69,23
+FAC-024,Loma Barangay Hall,Loma,Barangay Hall,79,14.32462,121.11386,32,57
+FAC-025,Loma Health Center,Loma,Health Center,88,14.33101,121.11023,42,24
+FAC-026,Loma Evacuation Center,Loma,Evacuation Center,148,14.32901,121.11237,113,81
+FAC-027,Zapote Health Center A,Zapote,Health Center,43,14.31857,121.06037,11,87
+FAC-028,Zapote Health Center B,Zapote,Health Center,44,14.31011,121.05262,23,96
+FAC-029,Mamplasan Hospital,Mamplasan,Hospital,212,14.3372,121.08575,127,71
+FAC-030,Mamplasan Health Center,Mamplasan,Health Center,52,14.33562,121.0853,7,49
+FAC-031,Ganado Health Center,Ganado,Health Center,52,14.31219,121.10152,32,94
+FAC-032,Ganado Barangay Hall,Ganado,Barangay Hall,41,14.3092,121.10616,10,89
+FAC-033,Ganado Evacuation Center,Ganado,Evacuation Center,487,14.31582,121.10077,75,91
+FAC-034,Langkiwa Barangay Hall,Langkiwa,Barangay Hall,47,14.32868,121.07455,42,62
+FAC-035,Bungahan Hospital,Bungahan,Hospital,565,14.34228,121.10103,520,33
+FAC-036,San Francisco (Halang) Health Center,San Francisco (Halang),Health Center,49,14.36274,121.10845,38,35
+FAC-037,Calabuso Health Center A,Calabuso,Health Center,56,14.32624,121.07209,20,98
+FAC-038,Calabuso Health Center B,Calabuso,Health Center,79,14.32549,121.07075,14,69
+FAC-039,Calabuso Evacuation Center,Calabuso,Evacuation Center,210,14.32013,121.0695,143,50
+FAC-040,Santo Tomas Evacuation Center,Santo Tomas,Evacuation Center,615,14.33893,121.07698,291,38

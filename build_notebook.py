@@ -79,67 +79,56 @@ These metrics reflect the BI monitoring goals for our tactical dashboard:
 kpi_code = """# Calculate 10 KPIs for BI Dashboard
 total_incidents = len(df_incidents)
 total_affected = int(df_incidents['NumAffected'].sum())
-available_teams = len(df_teams[df_teams['OnDuty/Availability'] == True])
+available_teams = len(df_teams[df_teams['OnDuty/Availability'] == 'Available'])
 total_capacity = df_fac['Capacity'].sum()
 highest_risk_brgy = df_brgy.sort_values(by='RiskScore', ascending=False).iloc[0]['Barangay']
-
-# Additional KPIs for 10 total
-total_evac_centers = len(df_fac[df_fac['Type'] == 'Evacuation Site'])
-water_rescue_teams = len(df_teams[df_teams['Specialty'] == 'WaterRescue'])
+total_evac_centers = len(df_fac[df_fac['Capacity']*0.9 > df_fac['Occupants']])
+water_rescue_teams = len(df_teams[df_teams['Specialty'] == 'Water Rescue'])
 critical_incidents = len(df_incidents[df_incidents['Severity'] == 'Critical'])
-avg_brgy_pop = int(df_brgy['Population'].mean())
-total_barangays = len(df_brgy)
+total_occupants = int(df_fac['Occupants'].sum())
+occ_pct = round((total_occupants / df_fac['Capacity'].sum()) * 100, 1)
+facilities_needing_resupply = len(df_fac[df_fac['ResourcesAvailable'] < 30])
 
-# Display 10 KPIs in two rows
-html_kpi = f\"\"\"
-<div style="background-color: #f0f2f5; padding: 20px; border-radius: 15px; font-family: sans-serif;">
-    <h2 style="text-align: center; color: #1a73e8; margin-bottom: 20px;">DRRM Strategic Performance Indicators (KPIs)</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
-        <div style="background: white; padding: 15px; border-radius: 10px; width: 180px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-top: 5px solid #1a73e8;">
-            <p style="margin: 0; font-size: 14px; color: #5f6368;">Total Incidents</p>
-            <h3 style="margin: 5px 0; color: #202124;">{total_incidents}</h3>
-        </div>
-        <div style="background: white; padding: 15px; border-radius: 10px; width: 180px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-top: 5px solid #d93025;">
-            <p style="margin: 0; font-size: 14px; color: #5f6368;">Total Affected</p>
-            <h3 style="margin: 5px 0; color: #202124;">{total_affected}</h3>
-        </div>
-        <div style="background: white; padding: 15px; border-radius: 10px; width: 180px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-top: 5px solid #1e8e3e;">
-            <p style="margin: 0; font-size: 14px; color: #5f6368;">Available Teams</p>
-            <h3 style="margin: 5px 0; color: #202124;">{available_teams}</h3>
-        </div>
-        <div style="background: white; padding: 15px; border-radius: 10px; width: 180px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-top: 5px solid #f9ab00;">
-            <p style="margin: 0; font-size: 14px; color: #5f6368;">Total Capacity</p>
-            <h3 style="margin: 5px 0; color: #202124;">{total_capacity}</h3>
-        </div>
-        <div style="background: white; padding: 15px; border-radius: 10px; width: 180px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-top: 5px solid #8ab4f8;">
-            <p style="margin: 0; font-size: 14px; color: #5f6368;">Risk Brgy</p>
-            <h3 style="margin: 5px 0; font-size: 16px; color: #202124;">{highest_risk_brgy}</h3>
-        </div>
-    </div>
-    <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 15px;">
-        <div style="background: white; padding: 15px; border-radius: 10px; width: 180px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #1a73e8;">
-            <p style="margin: 0; font-size: 14px; color: #5f6368;">Evac Centers</p>
-            <h3 style="margin: 5px 0; color: #202124;">{total_evac_centers}</h3>
-        </div>
-        <div style="background: white; padding: 15px; border-radius: 10px; width: 180px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #1e8e3e;">
-            <p style="margin: 0; font-size: 14px; color: #5f6368;">Water Rescue</p>
-            <h3 style="margin: 5px 0; color: #202124;">{water_rescue_teams}</h3>
-        </div>
-        <div style="background: white; padding: 15px; border-radius: 10px; width: 180px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #d93025;">
-            <p style="margin: 0; font-size: 14px; color: #5f6368;">Critical Events</p>
-            <h3 style="margin: 5px 0; color: #202124;">{critical_incidents}</h3>
-        </div>
-        <div style="background: white; padding: 15px; border-radius: 10px; width: 180px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #9aa0a6;">
-            <p style="margin: 0; font-size: 14px; color: #5f6368;">Avg Brgy Pop</p>
-            <h3 style="margin: 5px 0; color: #202124;">{avg_brgy_pop}</h3>
-        </div>
-        <div style="background: white; padding: 15px; border-radius: 10px; width: 180px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #1a73e8;">
-            <p style="margin: 0; font-size: 14px; color: #5f6368;">Total Brgys</p>
-            <h3 style="margin: 5px 0; color: #202124;">{total_barangays}</h3>
-        </div>
-    </div>
-</div>
-\"\"\"
+kpis = [
+    {"icon": "\U0001f6a8", "label": "Total Incidents",    "value": total_incidents,       "color": "#e53e3e", "bg": "#fff5f5", "badge": "Operational", "badge_color": "#e53e3e"},
+    {"icon": "\U0001f465", "label": "Total Affected",      "value": total_affected,        "color": "#dd6b20", "bg": "#fffaf0", "badge": "Impact",       "badge_color": "#dd6b20"},
+    {"icon": "\U0001f7e2", "label": "Available Teams",     "value": available_teams,       "color": "#276749", "bg": "#f0fff4", "badge": "Readiness",    "badge_color": "#276749"},
+    {"icon": "\U0001f3e5", "label": "Total Capacity",      "value": total_capacity,        "color": "#2b6cb0", "bg": "#ebf8ff", "badge": "Resources",    "badge_color": "#2b6cb0"},
+    {"icon": "\u26a0",     "label": "Critical Incidents",  "value": critical_incidents,    "color": "#822727", "bg": "#fff5f5", "badge": "Critical",     "badge_color": "#822727"},
+    {"icon": "\U0001f3e0", "label": "Evac Centers",        "value": total_evac_centers,    "color": "#276749", "bg": "#f0fff4", "badge": "Active",       "badge_color": "#276749"},
+    {"icon": "\U0001f30a", "label": "Water Rescue Teams",  "value": water_rescue_teams,    "color": "#2c5282", "bg": "#ebf8ff", "badge": "Specialized",  "badge_color": "#2c5282"},
+    {"icon": "\U0001f4cd", "label": "Highest Risk Brgy",   "value": highest_risk_brgy,     "color": "#744210", "bg": "#fffff0", "badge": "Priority",     "badge_color": "#744210"},
+    {"icon": "\U0001f4ca", "label": "Occupants / Capacity", "value": f"{occ_pct}%", "color": "#553c9a", "bg": "#faf5ff", "badge": "Occupancy",    "badge_color": "#553c9a"},
+    {"icon": "\U0001f6a6", "label": "Need Resupply",        "value": facilities_needing_resupply,                                    "color": "#234e52", "bg": "#e6fffa", "badge": "Resources",    "badge_color": "#234e52"},
+]
+
+cards_html = ""
+for kpi in kpis:
+    cards_html += (
+        '<div style="background:' + kpi['bg'] + '; border-radius:12px; padding:16px 20px; width:180px;'
+        ' box-shadow:0 2px 8px rgba(0,0,0,0.08); display:flex; flex-direction:column; gap:8px;'
+        ' border-left:5px solid ' + kpi['color'] + ';">' +
+        '<div style="display:flex; align-items:center; gap:10px;">'
+        '<span style="font-size:26px;">' + kpi['icon'] + '</span>'
+        '<div>'
+        '<div style="font-size:22px; font-weight:800; color:' + kpi['color'] + '; line-height:1.1;">' + str(kpi['value']) + '</div>'
+        '<div style="font-size:12px; color:#4a5568; font-weight:500; margin-top:2px;">' + kpi['label'] + '</div>'
+        '</div></div>'
+        '<div style="align-self:flex-start; background:' + kpi['color'] + '18; color:' + kpi['badge_color'] + ';'
+        ' font-size:10px; font-weight:700; padding:3px 8px; border-radius:20px; letter-spacing:0.5px;">' + kpi['badge'] + '</div>'
+        '</div>'
+    )
+
+html_kpi = (
+    '<div style="font-family:Segoe UI,sans-serif; background:#f7fafc; padding:24px; border-radius:16px;">'
+    '<div style="margin-bottom:20px;">'
+    '<h2 style="margin:0; color:#1a202c; font-size:20px;">\U0001f4cb DRRM Strategic Performance Indicators</h2>'
+    '<p style="margin:4px 0 0; color:#718096; font-size:13px;">Bi\u00f1an City DRRMO \u2014 Operational Dashboard</p>'
+    '</div>'
+    '<div style="display:flex; flex-wrap:wrap; gap:16px; justify-content: center">'
+    + cards_html +
+    '</div></div>'
+)
 display(HTML(html_kpi))
 """
 
@@ -177,50 +166,62 @@ This section translates raw data into actionable Business Intelligence. Each vis
 
 charts_code = """import matplotlib.colors as mcolors
 
-plt.figure(figsize=(18, 14))
+fig = plt.figure(figsize=(18, 28))
+gs = fig.add_gridspec(4, 2, height_ratios=[1, 1, 1.5, 1.5], hspace=0.5, wspace=0.35)
 
 # 1. Incident Trend Over Time
-plt.subplot(3, 2, 1)
-df_incidents.groupby('Month').size().plot(kind='line', marker='o', color='blue')
-plt.title('Monthly Incident Trend (Resource Prediction)')
-plt.ylabel('Count')
+ax1 = fig.add_subplot(gs[0, 0])
+df_incidents.groupby('Month').size().plot(kind='line', marker='o', color='blue', ax=ax1)
+ax1.set_title('Monthly Incident Trend (Resource Prediction)')
+ax1.set_ylabel('Count')
 
 # 2. Incident Composition by Type
-plt.subplot(3, 2, 2)
-df_incidents['Type'].value_counts().plot(kind='barh', color='orange')
-plt.title('Incident Types (Training Focus)')
+ax2 = fig.add_subplot(gs[0, 1])
+df_incidents['Type'].value_counts().plot(kind='barh', color='orange', ax=ax2)
+ax2.set_title('Incident Types (Training Focus)')
 
 # 3. Top 10 High-Risk Barangays
-plt.subplot(3, 2, 3)
+ax3 = fig.add_subplot(gs[1, 0])
 top_risk = df_brgy.sort_values(by='RiskScore', ascending=False).head(10)
-sns.barplot(data=top_risk, x='RiskScore', y='Barangay', palette='Reds_r')
-plt.title('Top 10 High-Risk Barangays (Mitigation Priority)')
+sns.barplot(data=top_risk, x='RiskScore', y='Barangay', palette='Reds_r', ax=ax3)
+ax3.set_title('Top 10 High-Risk Barangays (Mitigation Priority)')
 
 # 4. Gap Analysis: Population Affected vs Facility Capacity by Barangay
-plt.subplot(3, 2, 4)
+ax4 = fig.add_subplot(gs[1, 1])
 pop_affected = df_incidents.groupby('Barangay')['NumAffected'].sum()
 cap_per_brgy = df_fac.groupby('Barangay')['Capacity'].sum()
 gap_df = pd.DataFrame({'Population Affected': pop_affected, 'Facility Capacity': cap_per_brgy}).fillna(0)
 gap_df = gap_df.sort_values('Population Affected', ascending=False).head(10)
 x = range(len(gap_df))
 width = 0.4
-plt.bar([i - width/2 for i in x], gap_df['Population Affected'], width=width, color='#d93025', label='Population Affected')
-plt.bar([i + width/2 for i in x], gap_df['Facility Capacity'], width=width, color='#1e8e3e', label='Facility Capacity')
-plt.xticks(ticks=x, labels=gap_df.index, rotation=45, ha='right')
-plt.title('Gap Analysis: Affected vs Capacity (by Barangay)')
-plt.legend()
-plt.tight_layout()
+ax4.bar([i - width/2 for i in x], gap_df['Population Affected'], width=width, color='#d93025', label='Population Affected')
+ax4.bar([i + width/2 for i in x], gap_df['Facility Capacity'], width=width, color='#1e8e3e', label='Facility Capacity')
+ax4.set_xticks(ticks=x)
+ax4.set_xticklabels(gap_df.index, rotation=45, ha='right')
+ax4.set_title('Gap Analysis: Affected vs Capacity (by Barangay)')
+ax4.legend()
 
-# 5. Incident Severity Breakdown
-plt.subplot(3, 2, 5)
+# 5. Facilities Needing Resupply
+ax5 = fig.add_subplot(gs[2, :])
+resupply_df = df_fac[['Name', 'ResourcesAvailable']].sort_values('ResourcesAvailable').head(10)
+colors_resupply = ['#e53e3e' if v < 30 else '#f9ab00' if v < 60 else '#1e8e3e' for v in resupply_df['ResourcesAvailable']]
+ax5.barh(resupply_df['Name'], resupply_df['ResourcesAvailable'], color=colors_resupply)
+ax5.axvline(x=30, color='red', linestyle='--', linewidth=1.5, label='30% Resupply Threshold')
+ax5.set_xlabel('Resources Available (%)')
+ax5.set_title('Facility Resource Levels (Red = Needs Resupply)')
+ax5.legend(loc='lower right')
+ax5.set_xlim(0, 110)
+
+# 6. Incident Severity Breakdown
+ax6 = fig.add_subplot(gs[3, :])
 sev_counts = df_incidents['Severity'].value_counts()
 color_map = {'Low': '#28a745', 'Moderate': '#fd7e14', 'High': '#dc3545', 'Critical': '#8b0000'}
 colors = [color_map.get(x, 'gray') for x in sev_counts.index]
-patches, texts, autotexts = plt.pie(sev_counts, autopct='%1.1f%%', colors=colors, labels=sev_counts.index, startangle=140, radius=1.2)
+patches, texts, autotexts = ax6.pie(sev_counts, autopct='%1.1f%%', colors=colors, labels=sev_counts.index, startangle=140, radius=1.2)
 plt.setp(autotexts, size=12, weight="bold", color="white")
 plt.setp(texts, size=12, weight="bold")
-plt.title('Incident Severity Breakdown (Threat Level)')
-plt.ylabel('')
+ax6.set_title('Incident Severity Breakdown (Threat Level)')
+ax6.set_ylabel('')
 
 plt.tight_layout()
 plt.show()
