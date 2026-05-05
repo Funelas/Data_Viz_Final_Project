@@ -1,0 +1,16 @@
+TeamID,Name,BaseBarangay,Specialty,Status,OnDuty,Latitude,Longitude
+TEAM-001,Biñan Rescue Squad 1,Timbao,Water Rescue,On Duty,True,14.295,121.05
+TEAM-002,Biñan Rescue Squad 2,Timbao,Water Rescue,On Duty,True,14.295,121.05
+TEAM-003,Biñan Rescue Squad 3,De La Paz,Water Rescue,On Duty,True,14.348,121.084
+TEAM-004,Biñan Rescue Squad 4,Malaban,Search & Rescue,Available,False,14.346,121.088
+TEAM-005,Biñan Rescue Squad 5,San Jose,Search & Rescue,Available,False,14.343,121.082
+TEAM-006,Biñan Rescue Squad 6,Santo Niño,Medical,Available,False,14.335,121.086
+TEAM-007,Biñan Rescue Squad 7,De La Paz,Fire Response,Deployed,False,14.348,121.084
+TEAM-008,Biñan Rescue Squad 8,Canlalay,Fire Response,Available,False,14.342,121.072
+TEAM-009,Biñan Rescue Squad 9,Mamplasan,General Purpose,Available,False,14.309,121.075
+TEAM-010,Biñan Rescue Squad 10,Canlalay,Search & Rescue,Available,False,14.342,121.072
+TEAM-011,Biñan Rescue Squad 11,San Jose,General Purpose,Deployed,False,14.343,121.082
+TEAM-012,Biñan Rescue Squad 12,San Jose,Water Rescue,Available,False,14.343,121.082
+TEAM-013,Biñan Rescue Squad 13,Loma,Search & Rescue,Available,False,14.29,121.04
+TEAM-014,Biñan Rescue Squad 14,Zapote,Medical,On Duty,True,14.318,121.079
+TEAM-015,Biñan Rescue Squad 15,Timbao,Search & Rescue,On Duty,True,14.295,121.05

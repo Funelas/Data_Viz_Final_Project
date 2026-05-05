@@ -1,0 +1,44 @@
+FacilityID,Name,Barangay,Type,Capacity,Occupants,ResourcesAvailable,Latitude,Longitude
+F001,Poblacion Fire Station,Poblacion,Fire Station,24,11,51,14.340865,121.080918
+F002,Poblacion Fire Station,Poblacion,Fire Station,23,18,93,14.340851,121.085726
+F003,San Antonio Evacuation Site,San Antonio,Evacuation Site,832,640,11,14.329499,121.082327
+F004,San Jose Evacuation Site,San Jose,Evacuation Site,1374,978,22,14.346456,121.081013
+F005,San Jose School,San Jose,School,67,36,87,14.339451,121.082693
+F006,San Jose Fire Station,San Jose,Fire Station,64,46,71,14.339446,121.076153
+F007,San Vicente Evacuation Site,San Vicente,Evacuation Site,347,292,64,14.325547,121.08656
+F008,San Vicente Command Center,San Vicente,Command Center,15,12,96,14.331351,121.074997
+F009,Santo Niño Evacuation Site,Santo Niño,Evacuation Site,582,417,58,14.34027,121.087896
+F010,Santo Niño Health Care Center,Santo Niño,Health Care Center,34,22,95,14.328113,121.08858
+F011,Platero Evacuation Site,Platero,Evacuation Site,737,526,54,14.328864,121.080082
+F012,Platero Fire Station,Platero,Fire Station,56,30,60,14.320923,121.077352
+F013,Tubigan Fire Station,Tubigan,Fire Station,97,72,91,14.313142,121.07816
+F014,Tubigan Fire Station,Tubigan,Fire Station,41,36,60,14.319396,121.072319
+F015,Canlalay Fire Station,Canlalay,Fire Station,81,35,64,14.344954,121.077486
+F016,Canlalay School,Canlalay,School,14,10,70,14.340419,121.065059
+F017,De La Paz Evacuation Site,De La Paz,Evacuation Site,1471,1057,41,14.34633,121.085145
+F018,De La Paz School,De La Paz,School,43,25,58,14.343946,121.081614
+F019,Casile Evacuation Site,Casile,Evacuation Site,1398,783,37,14.350365,121.081994
+F020,Casile School,Casile,School,75,37,81,14.337455,121.078471
+F021,Casile School,Casile,School,90,40,60,14.348673,121.082222
+F022,Malaban Evacuation Site,Malaban,Evacuation Site,1190,487,39,14.346466,121.089711
+F023,Malaban Fire Station,Malaban,Fire Station,24,21,93,14.352157,121.087509
+F024,Malaban Fire Station,Malaban,Fire Station,53,21,57,14.342696,121.081582
+F025,Soro-Soro Fire Station,Soro-Soro,Fire Station,43,20,82,14.333191,121.078123
+F026,Soro-Soro Fire Station,Soro-Soro,Fire Station,48,30,90,14.329123,121.073183
+F027,Timbao School,Timbao,School,79,69,99,14.301759,121.056696
+F028,Timbao Command Center,Timbao,Command Center,72,47,51,14.28879,121.047808
+F029,Timbao School,Timbao,School,17,7,65,14.301048,121.057151
+F030,Loma Fire Station,Loma,Fire Station,72,36,54,14.297648,121.040523
+F031,Zapote School,Zapote,School,94,70,80,14.32515,121.073642
+F032,Zapote Health Care Center,Zapote,Health Care Center,64,37,63,14.324863,121.083084
+F033,Mamplasan Fire Station,Mamplasan,Fire Station,49,33,75,14.316922,121.077398
+F034,Ganado Health Care Center,Ganado,Health Care Center,67,27,57,14.293966,121.067024
+F035,Langkiwa Health Care Center,Langkiwa,Health Care Center,80,72,64,14.289415,121.052115
+F036,Langkiwa Evacuation Site,Langkiwa,Evacuation Site,417,184,44,14.294487,121.065754
+F037,Bungahan Health Care Center,Bungahan,Health Care Center,40,20,67,14.287704,121.063428
+F038,Bungahan Fire Station,Bungahan,Fire Station,83,59,86,14.284563,121.072554
+F039,Bungahan School,Bungahan,School,22,14,56,14.287544,121.065669
+F040,San Francisco (Halang) Hospital,San Francisco (Halang),Hospital,16,6,93,14.303455,121.067339
+F041,Calabuso Hospital,Calabuso,Hospital,53,35,56,14.280979,121.050043
+F042,Calabuso School,Calabuso,School,64,29,61,14.281457,121.050997
+F043,Santo Tomas Hospital,Santo Tomas,Hospital,80,32,56,14.307809,121.077989

@@ -1,0 +1,23 @@
+Barangay,HazardType,HazardLevel,Population,Latitude,Longitude
+Poblacion,Earthquake,Low,28654,14.337,121.085
+San Antonio,Flood,High,26575,14.336,121.088
+San Jose,Flood,High,16284,14.343,121.082
+San Vicente,Flood,Low,11265,14.332,121.081
+Santo Niño,Flood,Low,19423,14.335,121.086
+Platero,Flood,High,13322,14.323,121.082
+Tubigan,Flood,High,28333,14.32,121.076
+Canlalay,Flood,Medium,22568,14.342,121.072
+De La Paz,Flood,High,34419,14.348,121.084
+Casile,Flood,High,13666,14.344,121.086
+Malaban,Flood,Critical,23942,14.346,121.088
+Soro-Soro,Flood,Low,23431,14.329,121.078
+Timbao,Flood,Medium,5189,14.295,121.05
+Loma,Earthquake,Medium,6899,14.29,121.04
+Zapote,Fire,Medium,16394,14.318,121.079
+Mamplasan,Flood,High,32464,14.309,121.075
+Ganado,Earthquake,Low,15555,14.298,121.074
+Langkiwa,Flood,Medium,28897,14.288,121.06
+Bungahan,Earthquake,Medium,26870,14.285,121.068
+San Francisco (Halang),Flood,High,22159,14.301,121.065
+Calabuso,Flood,Medium,31531,14.285,121.055
+Santo Tomas,Earthquake,Medium,6021,14.315,121.07

@@ -41,10 +41,10 @@ In this ETL process, we handle missing values (e.g., filling missing `NumAffecte
 """
 
 etl_code = """# Load Data
-df_brgy = pd.read_csv('barangays1.csv')
-df_fac = pd.read_csv('facilities1.csv')
-df_teams = pd.read_csv('rescue_teams1.csv')
-df_incidents = pd.read_csv('incidents1.csv')
+df_brgy = pd.read_csv('barangays.csv')
+df_fac = pd.read_csv('facilities.csv')
+df_teams = pd.read_csv('rescue_teams.csv')
+df_incidents = pd.read_csv('incidents.csv')
 
 # 1. Inspect Data
 print("Incidents Dataset Shape:", df_incidents.shape)
@@ -79,7 +79,7 @@ These metrics reflect the BI monitoring goals for our tactical dashboard:
 kpi_code = """# Calculate 10 KPIs for BI Dashboard
 total_incidents = len(df_incidents)
 total_affected = int(df_incidents['NumAffected'].sum())
-available_teams = len(df_teams[df_teams['OnDuty/Availability'] == 'Available'])
+available_teams = len(df_teams[df_teams['Status'] == 'Available'])
 total_capacity = df_fac['Capacity'].sum()
 highest_risk_brgy = df_brgy.sort_values(by='RiskScore', ascending=False).iloc[0]['Barangay']
 total_evac_centers = len(df_fac[df_fac['Capacity']*0.9 > df_fac['Occupants']])
@@ -217,9 +217,9 @@ ax6 = fig.add_subplot(gs[3, :])
 sev_counts = df_incidents['Severity'].value_counts()
 color_map = {'Low': '#28a745', 'Moderate': '#fd7e14', 'High': '#dc3545', 'Critical': '#8b0000'}
 colors = [color_map.get(x, 'gray') for x in sev_counts.index]
-patches, texts, autotexts = ax6.pie(sev_counts, autopct='%1.1f%%', colors=colors, labels=sev_counts.index, startangle=140, radius=1.2)
-plt.setp(autotexts, size=12, weight="bold", color="white")
-plt.setp(texts, size=12, weight="bold")
+patches, texts, autotexts = ax6.pie(sev_counts, autopct='%1.1f%%', colors=colors, labels=sev_counts.index, startangle=90, radius=1.0)
+plt.setp(autotexts, size=11, weight="bold", color="white")
+plt.setp(texts, size=11, weight="bold")
 ax6.set_title('Incident Severity Breakdown (Threat Level)')
 ax6.set_ylabel('')
 
@@ -478,7 +478,7 @@ def add_facility(b):
             'Latitude': fac_lat_in.value,
             'Longitude': fac_lon_in.value
         }
-        pd.DataFrame([new_fac]).to_csv('facilities1.csv', mode='a', header=False, index=False)
+        pd.DataFrame([new_fac]).to_csv('facilities.csv', mode='a', header=False, index=False)
         print(f"✅ RECEIPT: Added Facility '{new_fac['Name']}' ({new_fac['Type']}) to {new_fac['Barangay']}.")
 
 def add_incident(b):
@@ -495,7 +495,7 @@ def add_incident(b):
             'Latitude': inc_lat_in.value,
             'Longitude': inc_lon_in.value
         }
-        pd.DataFrame([new_inc]).to_csv('incidents1.csv', mode='a', header=False, index=False)
+        pd.DataFrame([new_inc]).to_csv('incidents.csv', mode='a', header=False, index=False)
         print(f"🚨 RECEIPT: Logged new {new_inc['Severity']} {new_inc['Type']} incident at {new_inc['Barangay']} affecting {new_inc['NumAffected']} people.")
 
 btn_add_fac.on_click(add_facility)
